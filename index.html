@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartSpend Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'deep-indigo': '#4B0082',
+              'electric-blue': '#00BFFF',
+              indigo: {
+                950: '#1e1b4b',
+                900: '#312e81',
+                800: '#3730a3',
+                700: '#4338ca',
+                600: '#4f46e5',
+                500: '#6366f1',
+                400: '#818cf8',
+                300: '#a5b4fc',
+                200: '#c7d2fe',
+                100: '#e0e7ff',
+                50: '#eef2ff',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            animation: {
+              'blob': 'blob 7s infinite',
+              'shimmer': 'shimmer 2s linear infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'float-delayed': 'float 6s ease-in-out 3s infinite',
+              'marquee': 'marquee 25s linear infinite',
+              'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+              'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+              'pulse-glow': 'pulseGlow 2s infinite',
+            },
+            keyframes: {
+              blob: {
+                '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                '100%': { transform: 'translate(0px, 0px) scale(1)' },
+              },
+              shimmer: {
+                'from': { transform: 'translateX(-100%)' },
+                'to': { transform: 'translateX(100%)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              marquee: {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-50%)' },
+              },
+              fadeInUp: {
+                'from': { opacity: '0', transform: 'translateY(20px)' },
+                'to': { opacity: '1', transform: 'translateY(0)' },
+              },
+              shake: {
+                '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+              },
+              pulseGlow: {
+                '0%': { boxShadow: '0 0 0 0 rgba(0, 191, 255, 0.7)' },
+                '70%': { boxShadow: '0 0 0 15px rgba(0, 191, 255, 0)' },
+                '100%': { boxShadow: '0 0 0 0 rgba(0, 191, 255, 0)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0f0c29; /* Dark space background */
+        color: #ffffff;
+        overflow-x: hidden;
+      }
+      
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+      .animation-delay-4000 {
+        animation-delay: 4s;
+      }
+      
+      .animate-marquee:hover {
+        animation-play-state: paused;
+      }
+
+      /* Moving Grid Background */
+      .bg-grid {
+        background-size: 50px 50px;
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        animation: grid-move 20s linear infinite;
+      }
+      @keyframes grid-move {
+        0% { background-position: 0 0; }
+        100% { background-position: 50px 50px; }
+      }
+
+      /* 3D Perspective Utils */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      .preserve-3d {
+        transform-style: preserve-3d;
+      }
+      .backface-hidden {
+        backface-visibility: hidden;
+      }
+      
+      .rotate-y-12 {
+        transform: rotateY(12deg);
+      }
+      
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Glassmorphism utilities */
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .glass-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      }
+
+      /* Neumorphism utilities for dark mode */
+      .neu-dark {
+        background: #1a1638;
+        box-shadow: 8px 8px 16px #0b0918, -8px -8px 16px #292358;
+      }
+
+      .neu-dark-inset {
+        background: #1a1638;
+        box-shadow: inset 8px 8px 16px #0b0918, inset -8px -8px 16px #292358;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.574.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
